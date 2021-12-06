@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="update_mass_tags_wizard_view_form">
+            <field name="name">update.mass.tags.wizard.view.form</field>
+            <field name="model">update.mass.tags.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group> 
+                        <field name="update_method" widget='radio'/>                                     
+                        <field name="product_tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                    </group>
+                    <footer>
+                        <button string="Update" type="object" name="action_update_mass_tags" class="btn-primary" />
+                        <button string="Cancel" special="cancel" class="btn-light"/>
+                    </footer>      
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_update_mass_tags_wizard">
+            <field name="name">Mass Tag Update</field>
+            <field name="res_model">update.mass.tags.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>  
+        <record id="model_product_template_action_update_mass_tags" model="ir.actions.server">
+            <field name="name">Update Mass Tag</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if record:
+                    action_values = env.ref('Product_tags.action_update_mass_tags_wizard').sudo().read()[0]
+                    action_values.update({'context': env.context})
+                    action = action_values
+            </field>
+        </record> 
+    </data>
+</odoo>
+
