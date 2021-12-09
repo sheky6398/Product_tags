@@ -23,6 +23,16 @@ class MassTags(models.TransientModel):
                 result = record.update({
                     'tag_ids': [(6, 0, self.product_tag_ids.ids)]
                 })
+                # for self in record:
+                #     total_amount = 0
+                #     for fee_line in fee.fee_line_ids:
+                #         total_amount += fee_line.amount_paid
+                #     fee.amount_paid = total_amount
+                # for fee in self:
+                #     total_amount = 0
+                #     for fee_line in fee.fee_line_ids:
+                #         total_amount += fee_line.amount_paid
+                #     fee.amount_paid = total_amount
             elif update_method_replace:
                 result = record.pop({
                     'tag_ids': [(6, 0, self.product_tag_ids.ids)]
